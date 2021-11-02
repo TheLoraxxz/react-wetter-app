@@ -4,7 +4,7 @@ const LazyWetter = lazy(() => import('./Wetter'));
 
 const Wetter = (props: JSX.IntrinsicAttributes & { children?: React.ReactNode; }) => (
   <Suspense fallback={null}>
-    <LazyWetter {...props} />
+    <LazyWetter city={''} {...props} />
   </Suspense>
 );
 

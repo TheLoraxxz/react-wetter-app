@@ -5,7 +5,7 @@ export default {
   title: "Wetter",
 };
 
-export const Default = () => <Wetter />;
+export const Default = () => <Wetter city={""} />;
 
 Default.story = {
   name: 'default',
