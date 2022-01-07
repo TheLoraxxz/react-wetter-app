@@ -15,11 +15,11 @@ interface IState {
 }
 class Wetter extends React.Component<IProps, IState> {
   cityWheather: weather|null = null;
-  
+
   constructor(props : IProps) {
-    super(props); 
+    super(props);
     this.state = {
-      
+
     }
   }
 
@@ -29,7 +29,7 @@ class Wetter extends React.Component<IProps, IState> {
 
   render() {
     return <Card className={styles.weatherCard}>
-              <CardHeader 
+              <CardHeader
                 avatar = {
                   <Avatar src={this.state.weather?.icon} alt={this.state.weather?.description}></Avatar>
                 }
@@ -38,7 +38,7 @@ class Wetter extends React.Component<IProps, IState> {
                 <p className={styles.head}>{this.state.weather?.description}</p>
                 <p>Temperatur: {this.state.weather?.temperatur.toFixed(2).replace('.',',')}°C</p>
                 <p></p>
-                
+
               </CardContent>
           </Card>;
   }
@@ -47,7 +47,7 @@ class Wetter extends React.Component<IProps, IState> {
       this.setState({
         weather: {
           description: res.data["weather"][0]["description"],
-          icon: 'http://openweathermap.org/img/wn/'+res.data["weather"][0]["icon"]+".png", 
+          icon: 'http://openweathermap.org/img/wn/'+res.data["weather"][0]["icon"]+".png",
           temperatur: res.data["main"]["temp"]-273.15,
           tempMin: res.data["main"]["temp_min"]-273.15,
           tempMax: res.data["main"]["temp_max"]-273.15,
@@ -60,4 +60,5 @@ class Wetter extends React.Component<IProps, IState> {
     });
   }
 }
+
 export default Wetter;
