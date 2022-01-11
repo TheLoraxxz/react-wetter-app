@@ -38,6 +38,29 @@ class Wetter extends React.Component<IProps, IState> {
   }
 
 
+  getBackendAPI(){
+    console.log(`https://api.openweathermap.org/data/2.5/weather?q=${this.props.city}&appid=${ApiKey}&lang=de`)
+    axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${this.props.city}&appid=${ApiKey}&lang=de`).then((res)=>{
+      this.setState({
+        weather: {
+          description: res.data["weather"][0]["description"],
+          icon: 'http://openweathermap.org/img/wn/'+res.data["weather"][0]["icon"]+".png",
+          temperatur: res.data["main"]["temp"]-273.15,
+          tempMin: res.data["main"]["temp_min"]-273.15,
+          tempMax: res.data["main"]["temp_max"]-273.15,
+          name: res.data["name"],
+          humidity:res.data["main"]["humidity"],
+          sunrise: new Date(res.data["sys"]["sunrise"]*1000),
+          sunset: new Date(res.data["sys"]["sunset"]*1000),
+        }
+      });
+    }).catch((error)=> {
+      this.setState({
+        weather:null
+      })
+    });
+  }
+
   render() {
     if ( this.state.weather!=null) {
       return <Card className={styles.weatherCard}>
