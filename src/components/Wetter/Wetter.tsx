@@ -14,21 +14,29 @@ interface IState {
   weather?: weather |null
 }
 class Wetter extends React.Component<IProps, IState> {
-  cityWheather: weather|null = null;
 
   constructor(props : IProps) {
     super(props);
+
     this.state = {
 
     }
+
   }
 
   componentDidMount() {
-    if (this.props.city!=undefined) {
-      this.getBackendAPI(this.props.city);
+    if (this.props.city !== undefined) {
+      this.getBackendAPI();
     }
-
   }
+
+  componentDidUpdate(nextProps: Readonly<IProps>, nextState: Readonly<IState>, nextContext: any) {
+
+    if (this.props.city !== nextProps.city) {
+      this.getBackendAPI()
+    }
+  }
+
 
   render() {
     if ( this.state.weather!=null) {
@@ -48,27 +56,6 @@ class Wetter extends React.Component<IProps, IState> {
       } else {
         return <div>Netzwerkfehler</div>
     }
-    }
-  getBackendAPI(city:string){
-    axios.get("https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid="+ApiKey+"&lang=de").then((res)=>{
-      this.setState({
-        weather: {
-          description: res.data["weather"][0]["description"],
-          icon: 'http://openweathermap.org/img/wn/'+res.data["weather"][0]["icon"]+".png",
-          temperatur: res.data["main"]["temp"]-273.15,
-          tempMin: res.data["main"]["temp_min"]-273.15,
-          tempMax: res.data["main"]["temp_max"]-273.15,
-          name: res.data["name"],
-          humidity:res.data["main"]["humidity"],
-          sunrise: new Date(res.data["sys"]["sunrise"]*1000),
-          sunset: new Date(res.data["sys"]["sunset"]*1000),
-        }
-      });
-    }).catch((error)=> {
-      this.setState({
-        weather:null
-      })
-    });
   }
 }
 

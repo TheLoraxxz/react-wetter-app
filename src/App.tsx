@@ -7,27 +7,35 @@ import { IconButton, InputBase, Toolbar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 
-var city:string = 'Berlin';
+let city : string = 'Berlin';
+
 interface AppState {
-  inputvalue?:string,
+  inputValue?:string,
   citySearch?:string,
 }
-interface AppProps  {
 
-}
-class App extends React.Component<AppProps,AppState> {
+class App extends React.Component<{}, AppState> {
 
   constructor() {
-    let initAppState:AppState = {
-      inputvalue:undefined,
-      citySearch:"Berlin"
-    }
-    super(initAppState);
+    super({});
+
     this.state = {
-      citySearch:"Berlin",
-      inputvalue:undefined
+      inputValue: "",
+      citySearch: "Berlin"
     }
 
+  }
+
+  onKeyDownInputCity = (event:React.KeyboardEvent) => {
+    if (event.code === "Enter") {
+      let t = event.target as HTMLInputElement
+
+      this.setState({
+        citySearch:t.value,
+        inputValue:t.value
+      });
+
+    }
   }
 
   render() {
@@ -56,8 +64,9 @@ class App extends React.Component<AppProps,AppState> {
               </div>
               <InputBase
                   placeholder="Search City"
-                  value={this.state.inputvalue}
-                  onKeyDown={evt =>this.onKeyDownInputCity.bind(this)(evt)}
+                  value={this.state.inputValue}
+                  onChange={e => this.setState({inputValue: e.target.value})}
+                  onKeyDown={evt =>this.onKeyDownInputCity(evt)}
               />
             </div>
           </Toolbar>
@@ -67,16 +76,6 @@ class App extends React.Component<AppProps,AppState> {
         <Wetter city={this.state.citySearch} />
       </div>
     </>;
-  }
-  onKeyDownInputCity(event:React.KeyboardEvent) {
-    if (event.key==="Enter") {
-      let t = event.target as HTMLInputElement
-      this.state= {
-        citySearch:t.value,
-        inputvalue:t.value
-      }
-      console.log(this.state)
-    }
   }
 }
 
