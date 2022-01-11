@@ -7,8 +7,6 @@ import { IconButton, InputBase, Toolbar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 
-let city : string = 'Berlin';
-
 interface AppState {
   inputValue?:string,
   citySearch?:string,
